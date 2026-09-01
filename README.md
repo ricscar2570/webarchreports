@@ -2,52 +2,37 @@
 
 WebArch è un'applicazione amministrativa Excel per il ciclo mensile di acquisizione, normalizzazione, controllo, storicizzazione e rendicontazione di protocolli e fascicoli.
 
-La release corrente è **v1.1.0 — Source release**. Il repository contiene il template Excel, i moduli VBA, il builder Windows, gli script di verifica, le fonti dimostrative, la documentazione tecnica e il pacchetto distributivo completo.
+## Stato corrente
 
-## Funzioni principali
+**v1.1.1 — Builder hotfix / collaudo Windows in corso**
 
-Il file operativo espone quattro comandi:
+Il primo test reale su Excel/Windows del 1 settembre 2026 ha individuato un difetto nel builder v1.1.0: il template `.xlsx` poteva esporre `VBProject` ma restituire `VBComponents = null`. In PowerShell `$null.Count` viene valutato come `0`, producendo il log `Componenti iniziali: 0`; il successivo `VBComponents.Import()` falliva con `Impossibile chiamare un metodo su un'espressione con valore null`.
+
+Il builder **v1.1.1** corregge il problema convertendo prima il template in `.xlsm`, chiudendolo e riaprendolo, quindi verificando esplicitamente `VBProject` e `VBComponents` prima dell'importazione dei moduli. Vedi `PATCH_NOTES_v1.1.1.md`.
+
+## Funzioni previste
+
+Il workbook operativo espone quattro comandi:
 
 - **AGGIORNA TUTTO** — importazione universale, staging, deduplicazione, storico, KPI, criticità e aggiornamento report;
 - **DIAGNOSTICA FONTI** — riconoscimento di file e fogli in base alle intestazioni, indipendentemente da nomi e ordine delle colonne;
 - **ESEGUI COLLAUDO** — controlli strutturali, riconciliazioni, privacy e verbale associato all'ultimo aggiornamento;
 - **ESPORTA REPORT** — produzione controllata di PDF, KPI, criticità e manifest, consentita soltanto dopo collaudo valido.
 
-## Creazione del workbook operativo
+## Installazione / build
 
-Il repository distribuisce un template `.xlsx` senza macro. Per generare il workbook operativo:
+La build finale richiede Microsoft Excel desktop per Windows.
 
-1. clonare o scaricare il repository in una cartella locale scrivibile;
-2. verificare la presenza di Microsoft Excel desktop per Windows;
-3. abilitare temporaneamente in Excel l'accesso attendibile al modello a oggetti dei progetti VBA;
-4. chiudere Excel;
-5. eseguire `BUILD_WEBARCH.cmd`;
-6. eseguire `VERIFICA_BUILD.cmd`;
-7. aprire `Cruscotto_Gabinetto_WebArch_v1.1.xlsm` e usare prima **DIAGNOSTICA FONTI** sulla cartella `ESEMPI_FONTI`.
+1. Estrarre il pacchetto WebArch completo in una cartella locale scrivibile.
+2. Abilitare temporaneamente in Excel **Considera attendibile l'accesso al modello a oggetti dei progetti VBA**.
+3. Chiudere Excel.
+4. Assicurarsi di avere la versione corrente di `BUILD/Build-WebArch.ps1` (builder 1.1.1).
+5. Eseguire `BUILD_WEBARCH.cmd`.
+6. Il risultato atteso è `Cruscotto_Gabinetto_WebArch_v1.1.xlsm` e nel log deve comparire `Smoke test VBA: OK`.
+7. Disabilitare nuovamente l'accesso programmatico al progetto VBA dopo la build.
 
-Il builder non modifica le impostazioni di sicurezza di Excel e non scrive nel registro di Windows.
+## Stato di affidabilità
 
-## Struttura
+La v1.1.1 **non è ancora classificata RC2/produzione**. Prima dell'uso istituzionale devono essere completati: compilazione VBA reale, smoke test, prova di idempotenza, rollback controllato, collaudo su cartella di rete, verifica privacy degli output e due cicli mensili consecutivi.
 
-```text
-BUILD/                  builder e verifica PowerShell
-DOCUMENTAZIONE/         manuali, specifica, collaudo e migrazione
-ESEMPI_FONTI/           dataset dimostrativi
-VBA/                    dodici moduli e codice ThisWorkbook
-Cruscotto_...xlsx       template completo senza macro
-dist/                   pacchetto ZIP distributivo e checksum
-```
-
-## Stato del rilascio
-
-La release comprende validazione statica e test predisposti, ma prima dell'uso istituzionale richiede:
-
-- compilazione e prova reale in Excel Windows;
-- collaudo su cartella locale e di rete;
-- prova con operatore non tecnico;
-- verifica del rollback;
-- due cicli mensili consecutivi;
-- firma digitale del progetto VBA tramite certificato dell'Amministrazione;
-- migrazione verificata dei dati RC1.
-
-Consultare `LEGGIMI_PRIMA.txt`, `DOCUMENTAZIONE/MANUALE_OPERATIVO.md` e `VALIDAZIONE_STATICA.txt` prima dell'installazione.
+La repository viene riallineata progressivamente al pacchetto sorgente completo; non usare la sola presenza dei file su GitHub come prova di collaudo runtime.
