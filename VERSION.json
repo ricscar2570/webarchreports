@@ -1,0 +1,10 @@
+{
+  "phase": "alpha-frozen",
+  "baseline": "alpha-1.0.3-home1.1",
+  "next_phase": "beta-B0",
+  "source_version": "EASYONE-MINIMAL-1.0.3",
+  "home_version": "1.1",
+  "production_delta_from_accepted_baseline": 0,
+  "github_content_scope": "freeze registry and documentation; full source upload pending",
+  "date": "2026-09-14"
+}

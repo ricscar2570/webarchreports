@@ -1,38 +1,40 @@
-# WebArch Reports — WebArch v1.1
+# WebArch — EASYONE MINIMAL
 
-WebArch è un'applicazione amministrativa Excel per il ciclo mensile di acquisizione, normalizzazione, controllo, storicizzazione e rendicontazione di protocolli e fascicoli.
+## Stato del progetto
 
-## Stato corrente
+**Alpha congelata: EASYONE MINIMAL 1.0.3 + HOME 1.1.**
 
-**v1.1.1 — Builder hotfix / collaudo Windows in corso**
+Il 14 settembre 2026 il responsabile del progetto ha confermato: «funziona tutto come previsto», richiedendo il congelamento dell'alpha e l'avvio della beta. La conferma riguarda il suo utilizzo in Excel; non viene trasformata in una certificazione automatica di tutti i casi di test.
 
-Il primo test reale su Excel/Windows del 1 settembre 2026 ha individuato un difetto nel builder v1.1.0: il template `.xlsx` poteva esporre `VBProject` ma restituire `VBComponents = null`. In PowerShell `$null.Count` viene valutato come `0`, producendo il log `Componenti iniziali: 0`; il successivo `VBComponents.Import()` falliva con `Impossibile chiamare un metodo su un'espressione con valore null`.
+La beta B0 parte dagli stessi componenti produttivi: nessuna riscrittura, nessuna rimozione del debug e nessun ritorno alla macchina transazionale. La versione interna VBA resta EASYONE-MINIMAL-1.0.3; HOME resta 1.1.
 
-Il builder **v1.1.1** corregge il problema convertendo prima il template in `.xlsm`, chiudendolo e riaprendolo, quindi verificando esplicitamente `VBProject` e `VBComponents` prima dell'importazione dei moduli. Vedi `PATCH_NOTES_v1.1.1.md`.
+## Disponibilità dei file: distinzione importante
 
-## Funzioni previste
+Questo aggiornamento del repository pubblica il **registro del congelamento, gli hash dei 36 componenti, il piano beta e il verificatore dell'archivio**. Il pacchetto completo è stato preparato e consegnato separatamente nella conversazione di progetto:
 
-Il workbook operativo espone quattro comandi:
+`WebArch_ALPHA_1_0_3_HOME_1_1_CONGELATA.zip`
 
-- **AGGIORNA TUTTO** — importazione universale, staging, deduplicazione, storico, KPI, criticità e aggiornamento report;
-- **DIAGNOSTICA FONTI** — riconoscimento di file e fogli in base alle intestazioni, indipendentemente da nomi e ordine delle colonne;
-- **ESEGUI COLLAUDO** — controlli strutturali, riconciliazioni, privacy e verbale associato all'ultimo aggiornamento;
-- **ESPORTA REPORT** — produzione controllata di PDF, KPI, criticità e manifest, consentita soltanto dopo collaudo valido.
+SHA-256: `e94986fbee71cfcb380fdb53503a91058c812efcc3cbabac03e8c800872ef6f0`
 
-## Installazione / build
+**L'archivio completo, il template e tutti i sorgenti NON sono ancora caricati in questo Git tree o come asset di una release GitHub. Scaricare il repository non equivale a scaricare WebArch completo.** La pubblicazione integrale è un'attività aperta della beta. Il file .xlsm operativo con i dati dell'utente non è stato caricato e non deve essere pubblicato su questo repository pubblico.
 
-La build finale richiede Microsoft Excel desktop per Windows.
+I file `BUILD/`, `BUILD_WEBARCH.cmd` e `PATCH_NOTES_v1.1.1.md` appartengono al builder storico pre-MINIMAL: sono conservati per tracciabilità, **non sono la procedura di installazione della beta**.
 
-1. Estrarre il pacchetto WebArch completo in una cartella locale scrivibile.
-2. Abilitare temporaneamente in Excel **Considera attendibile l'accesso al modello a oggetti dei progetti VBA**.
-3. Chiudere Excel.
-4. Assicurarsi di avere la versione corrente di `BUILD/Build-WebArch.ps1` (builder 1.1.1).
-5. Eseguire `BUILD_WEBARCH.cmd`.
-6. Il risultato atteso è `Cruscotto_Gabinetto_WebArch_v1.1.xlsm` e nel log deve comparire `Smoke test VBA: OK`.
-7. Disabilitare nuovamente l'accesso programmatico al progetto VBA dopo la build.
+## Baseline conservata
 
-## Stato di affidabilità
+- Aggiorna tutto: importazione, validazione, deduplicazione, scrittura dati, analitiche, dashboard e report; salvataggio finale.
+- Stati protocollo presenti ma non mappati: WARNING registrato, protocollo conservato e aggiornamento non bloccato per questo motivo.
+- Correzioni PDF/XLS, accodamento staging, confronto dei testi simili a date e anteprima PA3.
+- Debug del salvataggio mantenuto, compreso DisplayAlerts al salvataggio finale.
+- Esportazione ordinaria come bozza tecnica; nessuna autorizzazione Gold implicita.
+- HOME 1.1: collegamenti interni ai fogli, senza dipendenza dal nome del workbook.
 
-La v1.1.1 **non è ancora classificata RC2/produzione**. Prima dell'uso istituzionale devono essere completati: compilazione VBA reale, smoke test, prova di idempotenza, rollback controllato, collaudo su cartella di rete, verifica privacy degli output e due cicli mensili consecutivi.
+## Documenti correnti
 
-La repository viene riallineata progressivamente al pacchetto sorgente completo; non usare la sola presenza dei file su GitHub come prova di collaudo runtime.
+- [Congelamento e perimetro](releases/alpha-1.0.3-home1.1/FREEZE.md)
+- [Identità dell'archivio](releases/alpha-1.0.3-home1.1/artifact.json)
+- [Hash dei componenti produttivi](releases/alpha-1.0.3-home1.1/COMPONENTS.sha256)
+- [Piano beta B0](docs/BETA_B0.md)
+- [Verifica dell'archivio ricevuto](tools/verify_frozen_archive.py)
+
+Non reinstallare o reimportare moduli nella copia funzionante soltanto per cambiare fase del progetto. Conservare l'alpha separatamente e svolgere i test beta su copie prive di dati da pubblicare.
