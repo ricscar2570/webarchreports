@@ -1,7 +1,9 @@
 {
-  "phase": "alpha-frozen",
+  "phase": "beta",
+  "beta_milestone": "B0",
   "baseline": "alpha-1.0.3-home1.1",
-  "next_phase": "beta-B0",
+  "alpha_freeze_record_commit": "6200b27585be2c37b828145499a00ff379ef6b96",
+  "alpha_freeze_record_branch": "alpha-frozen-1.0.3-home1.1",
   "source_version": "EASYONE-MINIMAL-1.0.3",
   "home_version": "1.1",
   "production_delta_from_accepted_baseline": 0,
