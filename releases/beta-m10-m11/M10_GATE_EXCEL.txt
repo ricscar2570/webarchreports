@@ -1,0 +1,55 @@
+WEBARCH BETA M10 — GATE EXCEL NATIVO
+=====================================
+
+USARE SOLO UNA COPIA BETA CHE CONTIENE GIA' M1-M9.
+
+A. IMPORTAZIONE MODULI
+1. Chiudi l'alpha congelata e conserva la copia di sicurezza.
+2. Nella copia beta M9 importa, nell'ordine:
+   81_modOP_M10_Core.bas
+   82_modOP_M10_Update.bas
+   83_modOP_M10_Report.bas
+   84_modOP_M10_Main.bas
+3. ALT+F11 > Debug > Compila VBAProject.
+4. Se la compilazione segnala un errore: FERMATI. Non eseguire OP_M10_INSTALLA.
+5. Esegui OP_M10_INSTALLA.
+6. Devono comparire OP_HOME, OP_SINTESI, OP_REPORT. OP_M10_META resta VeryHidden.
+7. HOME alpha deve essere invariata.
+
+B. TEST NATIVO NON DISTRUTTIVO
+1. Crea una copia sacrificabile che inizi con WebArch_TEST_OP_M10.
+2. Importa 99_modOP_M10_NativeTests.bas.
+3. Debug > Compila VBAProject.
+4. Esegui OP_M10_TEST_COMPLETO.
+5. Atteso: "BETA M10 TEST: PASS".
+6. Il test NON salva: chiudi la copia senza salvare.
+
+C. TEST DEL RIALLINEAMENTO
+1. In una copia beta di prova gia' salvata, esegui OP_M10_RIALLINEA.
+2. Deve usare soltanto i pulsanti RICARICA/RIALLINEA effettivamente esposti da OP_DECRETI, OP_INCIDENTI e OP_FASCICOLI.
+3. Se uno dei tre non espone tale azione, il test deve FALLIRE (fail-closed).
+4. Dopo successo, OP_M10_STATO deve indicare CORRENTE.
+5. Salva manualmente, chiudi e riapri. OP_M10_STATO deve restare CORRENTE.
+
+D. TEST IMPORTAZIONE INTEGRATA
+1. Usa fonti note e una copia beta salvata.
+2. Esegui OP_M10_IMPORTA_FONTI.
+3. Verifica che la cartella fonti venga richiesta nuovamente.
+4. Verifica che il flusso termini soltanto dopo il riallineamento OP_.
+5. Atteso: un unico Save finale del nuovo percorso.
+6. Confronta DB/risultati alpha con AggiornaTutto originale sugli stessi input.
+7. Verifica che le rettifiche M7/M8/M9 restino applicate nelle viste OP_.
+
+E. TEST VECCHIE MACRO / STALENESS
+1. Esegui AggiornaTutto originale su una copia di prova.
+2. Non eseguire RIALLINEA.
+3. OP_M10_ESPORTA_PDF deve BLOCCARE l'export come base non corrente.
+4. Esegui OP_M10_RIALLINEA e poi riprova: l'export puo' essere consentito.
+5. Ripetere anche con FSC_Aggiorna originale.
+
+F. CALCOLO MANUALE
+1. Imposta Excel su calcolo manuale.
+2. Riallinea.
+3. OP_M10_ESPORTA_PDF deve ricalcolare OP_SINTESI/OP_REPORT e non esportare uno stato vecchio.
+
+Solo dopo tutti i PASS passare al gate M11.
