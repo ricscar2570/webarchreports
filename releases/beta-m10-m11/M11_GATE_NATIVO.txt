@@ -1,0 +1,82 @@
+WEBARCH BETA M11 — GATE NATIVO DI ACCETTAZIONE
+=============================================
+
+QUESTO GATE E' OBBLIGATORIO PRIMA DI CHIAMARE LA BETA "RC CONGELATA".
+
+1. PREPARAZIONE
+[ ] Copia beta M10 funzionante e gia' salvata.
+[ ] Copia di test chiamata WebArch_TEST_OP_M11_....
+[ ] Alpha congelata tenuta separata.
+
+2. COMPILAZIONE
+[ ] Importa 100_modOP_M11_NativeAcceptance.bas SOLO nella copia di test.
+[ ] ALT+F11 > Debug > Compila VBAProject = PASS.
+Risultato osservato: __________________________
+
+3. GATE STRUTTURALE M11
+[ ] Esegui OP_M11_TEST_ACCETTAZIONE.
+[ ] Esito: "BETA M11 - GATE NATIVO PARZIALE: PASS".
+[ ] Registra il tempo token mostrato: __________ s.
+[ ] Chiudi la copia di test senza salvare.
+
+4. REGRESSIONE ALPHA
+Con le stesse fonti note:
+[ ] AggiornaTutto originale produce gli stessi DB/risultati sorgente della baseline.
+[ ] G8/G9/G10/G12 alpha conservano la loro semantica.
+[ ] HOME alpha e pulsanti originali funzionano.
+[ ] FSC_Aggiorna originale funziona come prima.
+Note: ________________________________________
+
+5. CICLO OPERATIVO BETA COMPLETO
+[ ] OP_M10_IMPORTA_FONTI termina correttamente.
+[ ] Decreti: rettifica persistente dopo importazione.
+[ ] Incidenti: chiusura/riapertura e KPI osservati corretti.
+[ ] Fascicoli: nota/rettifica persistente; FSC_EVENTI non falsificati.
+[ ] Scadenze/promemoria persistono.
+[ ] OP_M10_STATO = CORRENTE.
+[ ] OP_M10_ESPORTA_PDF crea il PDF operativo e non include note per default.
+Note: ________________________________________
+
+6. SAVE / REOPEN
+[ ] Salva.
+[ ] Chiudi Excel completamente.
+[ ] Riapri il workbook.
+[ ] Compila nuovamente VBAProject.
+[ ] OP_M10_STATO = CORRENTE.
+[ ] Rettifiche/note/task restano presenti.
+[ ] Nessun foglio/tavola alpha risulta danneggiato.
+Note: ________________________________________
+
+7. STALENESS / VECCHIE MACRO
+[ ] Esegui una vecchia macro di importazione.
+[ ] Prima del riallineamento, export M10 = BLOCCATO.
+[ ] Dopo OP_M10_RIALLINEA, stato = CORRENTE.
+[ ] Ripetere per FSC_Aggiorna.
+Note: ________________________________________
+
+8. INSTALLAZIONE RIPETUTA
+[ ] Esegui OP_M10_INSTALLA due volte.
+[ ] Nessun foglio duplicato.
+[ ] Nessun archivio OP_ cancellato.
+[ ] Collisione con un foglio estraneo omonimo viene bloccata.
+Note: ________________________________________
+
+9. PRESTAZIONI — MISURARE, NON STIMARE
+Dataset reale / righe protocolli: __________
+Righe decreti: __________
+Righe incidenti: ________
+Righe FSC: ______________
+Tempo OP_M10_SourceToken: __________ s
+Tempo OP_M10_RIALLINEA: __________ s
+Tempo OP_M10_IMPORTA_FONTI: _______ s
+Memoria/reattivita' osservata: __________________________
+
+10. DECISIONE
+[ ] PASS — nessuna regressione nota nei casi concordati.
+[ ] FAIL — correzione richiesta SOLO nei moduli OP_.
+[ ] LIMITAZIONE ACCETTATA — descrivere: __________________
+
+Approvazione utente / data: _____________________________
+
+FINCHE' I CAMPI SOPRA NON SONO COMPILATI CON ESITI REALI,
+LO STATO CORRETTO E': "M11 CANDIDATO, GATE NATIVO NON ESEGUITO".
