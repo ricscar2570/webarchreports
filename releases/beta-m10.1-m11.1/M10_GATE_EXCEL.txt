@@ -1,0 +1,62 @@
+WEBARCH BETA M10.1 — GATE EXCEL NATIVO
+=========================================
+
+STATO DI PARTENZA
+- Usare SOLO una copia della beta con Alpha congelata + B1 + M1-M9.
+- Se sono già presenti i vecchi moduli M10, sostituire SOLO:
+  modOP_M10_Core
+  modOP_M10_Update
+  modOP_M10_Report
+  modOP_M10_Main
+- Non modificare Alpha.
+- Conservare una copia di sicurezza prima di iniziare.
+
+A. IMPORTAZIONE M10.1
+1. Importa nell'ordine:
+   81_modOP_M10_Core.bas
+   82_modOP_M10_Update.bas
+   83_modOP_M10_Report.bas
+   84_modOP_M10_Main.bas
+2. ALT+F11 > Debug > Compila VBAProject.
+3. Se compare QUALSIASI errore: STOP. Non eseguire installazione.
+4. Esegui OP_M10_INSTALLA.
+5. Verifica OP_HOME/OP_SINTESI/OP_REPORT unici, OP_M10_META VeryHidden, HOME Alpha invariata e CURRENT_GATE inizialmente BLOCCATO.
+
+B. PREFLIGHT BOZZE
+1. Su copia senza modifiche pendenti esegui OP_M10_RIALLINEA.
+2. Se M10.1 segnala una API CountVisibleEdits/CountPlusEdits non disponibile: NON bypassare; il gate è FAIL finché il contratto non viene corretto.
+3. Crea una modifica visibile NON applicata in un dominio OP_.
+4. RIALLINEA/IMPORTA FONTI devono BLOCCARE prima di scrivere la fonte.
+
+C. TEST NATIVO M10.1
+1. Copia sacrificabile WebArch_TEST_OP_M10_....
+2. Importa 99_modOP_M10_NativeTests.bas.
+3. Debug > Compila VBAProject.
+4. Esegui OP_M10_TEST_COMPLETO.
+5. Atteso: BETA M10.1 TEST: PASS.
+6. Il test verifica il riallineamento mentre AGGIORNA_TUTTO detiene già il BUSY.
+7. Attiva intenzionalmente MINIMAL_DiscardRequired alla fine.
+8. CHIUDI LA COPIA SENZA SALVARE.
+
+D. RIALLINEAMENTO REALE
+Devono riuscire OP_M3_RefreshViewCore, OP_M4_RefreshProtocolPlusCore, OP_M5_SyncProtocolRemindersCore, OP_M5_RefreshViewCore, OP_M7_RefreshViewCore, OP_M8_RefreshViewCore, OP_M9_RefreshViewCore. Poi OP_M10_STATO = CORRENTE; salva manualmente, chiudi Excel, riapri, compila e verifica ancora CORRENTE.
+
+E. IMPORTAZIONE FONTI INTEGRATA
+Esegui OP_M10_IMPORTA_FONTI con fonti note; confronta i DB Alpha con AggiornaTutto originale; rettifiche/note/manuali M2-M9 devono persistere; deve esserci UN SOLO Save finale. Se il refresh fallisce dopo la scrittura Alpha: nessun Save finale, discard, chiusura senza salvare.
+
+F. FSC
+Fotografia identica: nessun cambiamento FSC_* verificabile => nessun Save M10.1. Fotografia nuova: stato FSC_* cambia, refresh completo e un solo Save. Caso B1 bloccante/discard: nessun Save.
+
+G. STALENESS
+Da CORRENTE esegui vecchio AggiornaTutto: export deve bloccarsi finché non RIALLINEA. Ripeti con FSC_Aggiorna. Modifica config/mapping rilevante: stato NON CORRENTE.
+
+H. PDF
+Con stato CORRENTE e senza bozze, OP_M10_ESPORTA_PDF deve creare PDF non vuoto, OPERATIVO/NON ISTITUZIONALE, note escluse per default. Discard o stale => export impossibile.
+
+I. CALCOLO MANUALE
+Imposta calcolo manuale, riallinea, ricostruisci/esporta: nessun risultato vecchio può essere dichiarato corrente.
+
+J. M4H1
+Prima del congelamento RC applicare M4H1_HARDENING_REQUIRED.txt, ricompilare e rieseguire M4 29/29.
+
+SOLO CON TUTTI I PASS PASSARE A M11.1.
