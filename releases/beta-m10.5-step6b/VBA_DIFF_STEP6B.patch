@@ -1,0 +1,184 @@
+--- /mnt/data/webarch_step6b/baseline_sources/M10_4/83_modOP_M10_Report.bas	2026-09-16 17:38:32.686521012 +0000
++++ /mnt/data/webarch_step6b/cumulative/M10_4/83_modOP_M10_Report.bas	2026-09-16 17:39:08.664206498 +0000
+@@ -1,6 +1,9 @@
+ Attribute VB_Name = "modOP_M10_Report"
+ Option Explicit
+ 
++Private Const OP_M10_OWNER_SUMMARY As String = "M10_APRI_SINTESI"
++Private Const OP_M10_OWNER_EXPORT As String = "M10_ESPORTA_PDF"
++
+ Private Sub OP_M10_ClearGenerated(ByVal ws As Worksheet)
+     Dim markerValue As String
+ 
+@@ -430,6 +433,35 @@
+ 
+ Public Sub OP_M10_APRI_SINTESI()
+     Dim detail As String
++    Dim guardHeld As Boolean
++    Dim errNumber As Long
++    Dim errDescription As String
++
++    On Error GoTo EH
++    If Not EASYONE_TryBeginOperation(OP_M10_OWNER_SUMMARY, detail) Then
++        MsgBox detail, vbExclamation, "WebArch Beta M10.4"
++        Exit Sub
++    End If
++    guardHeld = True
++
++    OP_M10_APRI_SINTESI_CORE
++
++Cleanup:
++    On Error Resume Next
++    If guardHeld Then EASYONE_EndOperation OP_M10_OWNER_SUMMARY
++    On Error GoTo 0
++    Exit Sub
++
++EH:
++    errNumber = Err.Number
++    errDescription = Err.Description
++    MsgBox "Apertura sintesi M10.4 fallita [" & CStr(errNumber) & "]: " & errDescription, _
++           vbCritical, "WebArch Beta M10.4"
++    Resume Cleanup
++End Sub
++
++Private Sub OP_M10_APRI_SINTESI_CORE()
++    Dim detail As String
+ 
+     If Not OP_M10_SheetExists("OP_SINTESI") Then
+         MsgBox "OP_SINTESI non disponibile. Esegui OP_M10_INSTALLA.", _
+@@ -446,6 +478,35 @@
+ 
+ Public Sub OP_M10_ESPORTA_PDF()
+     Dim detail As String
++    Dim guardHeld As Boolean
++    Dim errNumber As Long
++    Dim errDescription As String
++
++    On Error GoTo EH
++    If Not EASYONE_TryBeginOperation(OP_M10_OWNER_EXPORT, detail) Then
++        MsgBox detail, vbExclamation, "WebArch Beta M10.4"
++        Exit Sub
++    End If
++    guardHeld = True
++
++    OP_M10_ESPORTA_PDF_CORE
++
++Cleanup:
++    On Error Resume Next
++    If guardHeld Then EASYONE_EndOperation OP_M10_OWNER_EXPORT
++    On Error GoTo 0
++    Exit Sub
++
++EH:
++    errNumber = Err.Number
++    errDescription = Err.Description
++    MsgBox "Export M10.4 wrapper fallito [" & CStr(errNumber) & "]: " & errDescription, _
++           vbCritical, "WebArch Beta M10.4"
++    Resume Cleanup
++End Sub
++
++Private Sub OP_M10_ESPORTA_PDF_CORE()
++    Dim detail As String
+     Dim outputPath As Variant
+     Dim defaultPath As String
+     Dim ws As Worksheet
+--- /mnt/data/webarch_step6b/baseline_sources/M10_4/84_modOP_M10_Main.bas	2026-09-16 17:38:32.686587348 +0000
++++ /mnt/data/webarch_step6b/cumulative/M10_4/84_modOP_M10_Main.bas	2026-09-16 17:39:08.663427495 +0000
+@@ -1,6 +1,8 @@
+ Attribute VB_Name = "modOP_M10_Main"
+ Option Explicit
+ 
++Private Const OP_M10_OWNER_INSTALL As String = "M10_INSTALLA"
++
+ Private Sub OP_M10_DeleteOwnedButtons(ByVal ws As Worksheet)
+     Dim i As Long
+     Dim shp As Shape
+@@ -92,6 +94,35 @@
+ 
+ Public Sub OP_M10_INSTALLA()
+     Dim detail As String
++    Dim guardHeld As Boolean
++    Dim errNumber As Long
++    Dim errDescription As String
++
++    On Error GoTo EH
++    If Not EASYONE_TryBeginOperation(OP_M10_OWNER_INSTALL, detail) Then
++        MsgBox detail, vbExclamation, "WebArch Beta M10.4"
++        Exit Sub
++    End If
++    guardHeld = True
++
++    OP_M10_INSTALLA_CORE
++
++Cleanup:
++    On Error Resume Next
++    If guardHeld Then EASYONE_EndOperation OP_M10_OWNER_INSTALL
++    On Error GoTo 0
++    Exit Sub
++
++EH:
++    errNumber = Err.Number
++    errDescription = Err.Description
++    MsgBox "Installazione M10.4 wrapper fallita [" & CStr(errNumber) & "]: " & errDescription, _
++           vbCritical, "WebArch Beta M10.4"
++    Resume Cleanup
++End Sub
++
++Private Sub OP_M10_INSTALLA_CORE()
++    Dim detail As String
+     Dim warningDetail As String
+     Dim wsHome As Worksheet
+     Dim wsSummary As Worksheet
+--- /mnt/data/webarch_step6b/baseline_sources/PATCH/60_modOP_M4_Main.bas	2026-09-16 17:38:32.675650824 +0000
++++ /mnt/data/webarch_step6b/cumulative/PATCH/60_modOP_M4_Main.bas	2026-09-16 17:39:08.664623591 +0000
+@@ -4,6 +4,7 @@
+ Private Const OP_M4_VERSION As String = "OP-M4-CAMPI-PERSONALIZZABILI-1.0"
+ Private Const OP_M4_OWNER_INSTALL As String = "OP_M4_INSTALL"
+ Private Const OP_M4_OWNER_CONFIG As String = "OP_M4_CONFIG"
++Private Const OP_M4_OWNER_ADD As String = "OP_M4_ADD"
+ Private Const OP_M4_OWNER_REFRESH As String = "OP_M4_REFRESH"
+ Private Const OP_M4_OWNER_UPDATE As String = "OP_M4_UPDATE"
+ 
+@@ -82,9 +83,42 @@
+ 
+ Public Sub OP_M4_AGGIUNGI_CAMPO()
+     Dim detail As String
++    Dim guardHeld As Boolean
++    Dim excelStateCaptured As Boolean
++    Dim errNumber As Long
++    Dim errDescription As String
++
++    On Error GoTo EH
++    If Not EASYONE_TryBeginOperation(OP_M4_OWNER_ADD, detail) Then
++        OP_M4_ShowFailure detail
++        Exit Sub
++    End If
++    guardHeld = True
++    If Not MINIMAL_PrepareWorkbook(detail) Then
++        OP_M4_ShowFailure detail
++        GoTo Cleanup
++    End If
++    CaptureExcelState
++    excelStateCaptured = True
++    EnterControlledExecution
+     If Not OP_M4_AddBlankConfigRowCore(detail) Then
+         OP_M4_ShowFailure detail
++        GoTo Cleanup
+     End If
++
++Cleanup:
++    On Error Resume Next
++    If excelStateCaptured Then RestoreExcelState
++    If guardHeld Then EASYONE_EndOperation OP_M4_OWNER_ADD
++    On Error GoTo 0
++    Exit Sub
++
++EH:
++    errNumber = Err.Number
++    errDescription = Err.Description
++    detail = "Aggiunta campo M4 fallita [" & CStr(errNumber) & "]: " & errDescription
++    OP_M4_ShowFailure detail
++    Resume Cleanup
+ End Sub
+ 
+ Public Sub OP_M4_RICARICA_CAMPI()
