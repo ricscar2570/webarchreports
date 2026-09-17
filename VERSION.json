@@ -10,6 +10,9 @@
   "m10_version": "BETA-M10.5-REMEDIATION-STEP6B",
   "m11_version": "BETA-M11.5-FAILSAFE",
   "current_release_record": "releases/beta-m10.5-step6b",
+  "promotion_gate_record": "docs/RC_PROMOTION_GATE.md",
+  "promotion_target_branch": "main",
+  "promotion_state": "BLOCKED_NATIVE_AND_AUDIT_RECONCILIATION",
   "closed_offline_findings": [
     "P0-01 M4 lost-update writer guard",
     "P0-02 M4 reload stale/missing baseline recovery",
@@ -18,6 +21,14 @@
     "P1-03 M11 fail-safe after M2 mutation",
     "P1-04 workbook-qualified M10 buttons",
     "P1-05 EASYONE reentrancy guards"
+  ],
+  "residual_audit_reconciliation_required": [
+    "APP-P1-06 / SURFACE-P1-01 macro surface classification",
+    "APP-P2-01 PDF filename/version provenance",
+    "APP-P2-02 PDF IsCurrent after SaveAs and before export",
+    "APP-P2-03 / SYS-P2-01 concurrency-scope optimization disposition",
+    "APP-P2-04 / DOC-P2-01 hardening/version naming consistency",
+    "APP-P1-02 / QA-P1-01 explicit procedure-scoped verifier closure record"
   ],
   "package_suites": "PASS 17/17",
   "package_release_qa": "PASS 92/92",
@@ -48,5 +59,5 @@
   "release_candidate_frozen": false,
   "github_content_scope": "current remediation record, exact STEP6B VBA diff, QA evidence, modified-module hashes and package checksum; full verified delivery archived in Project Library; no operational workbook or real data published",
   "previous_m10_4_m11_4_status": "HISTORICAL_SUPERSEDED_AFTER_TOTAL_FLOW_AUDIT",
-  "date": "2026-09-16"
+  "date": "2026-09-17"
 }
