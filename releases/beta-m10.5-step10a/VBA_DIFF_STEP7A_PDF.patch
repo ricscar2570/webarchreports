@@ -1,0 +1,39 @@
+--- STEP6B/M10_4/83_modOP_M10_Report.bas
++++ STEP7A/M10_4/83_modOP_M10_Report.bas
+@@ -542,7 +542,8 @@
+     End If
+ 
+     defaultPath = ThisWorkbook.Path & Application.PathSeparator & _
+-                  "WebArch_BETA_REPORT_OPERATIVO_M10_3_" & _
++                  "WebArch_REPORT_OPERATIVO_" & _
++                  Replace(Replace(OP_M10_Version(), ".", "_"), "-", "_") & "_" & _
+                   Format$(Now, "yyyymmdd_hhnnss") & ".pdf"
+ 
+     outputPath = Application.GetSaveAsFilename(InitialFileName:=defaultPath, _
+@@ -550,6 +551,12 @@
+                     Title:="Esporta report operativo WebArch Beta M10.4")
+     If VarType(outputPath) = vbBoolean Then Exit Sub
+ 
++    If Not OP_M10_IsCurrent(detail) Then
++        MsgBox "EXPORT BLOCCATO DOPO SAVE AS: " & detail, _
++               vbCritical, "WebArch Beta M10.4"
++        Exit Sub
++    End If
++
+     If LCase$(Right$(CStr(outputPath), 4)) <> ".pdf" Then
+         outputPath = CStr(outputPath) & ".pdf"
+     End If
+@@ -566,6 +573,13 @@
+ 
+     Set ws = ThisWorkbook.Worksheets("OP_REPORT")
+     ws.Calculate
++
++    If Not OP_M10_IsCurrent(detail) Then
++        MsgBox "EXPORT BLOCCATO PRIMA DEL PDF: " & detail, _
++               vbCritical, "WebArch Beta M10.4"
++        Exit Sub
++    End If
++
+     ws.ExportAsFixedFormat Type:=xlTypePDF, Filename:=CStr(outputPath), _
+                            Quality:=xlQualityStandard, IncludeDocProperties:=True, _
+                            IgnorePrintAreas:=False, OpenAfterPublish:=False
