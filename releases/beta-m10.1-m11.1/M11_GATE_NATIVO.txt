@@ -1,0 +1,68 @@
+WEBARCH BETA M11.1 — GATE NATIVO DI ACCETTAZIONE
+=================================================
+
+QUESTO GATE E' OBBLIGATORIO PRIMA DI RC1.
+
+1. PREPARAZIONE
+[ ] M10.1 ha superato tutto il proprio gate Excel.
+[ ] M4H1 applicato e compilato.
+[ ] Copia test chiamata WebArch_TEST_OP_M11_....
+[ ] Alpha congelata separata e intatta.
+
+2. COMPILAZIONE
+[ ] Importa 100_modOP_M11_1_NativeAcceptance.bas SOLO nella copia test.
+[ ] ALT+F11 > Debug > Compila VBAProject = PASS.
+
+3. TEST M11.1
+[ ] Esegui OP_M11_TEST_ACCETTAZIONE.
+[ ] Atteso: BETA M11.1 - GATE NATIVO STRUTTURALE: PASS.
+[ ] Registra il tempo source token.
+[ ] Chiudi la copia senza salvare.
+
+4. REGRESSIONE ALPHA
+[ ] AggiornaTutto originale produce gli stessi DB/risultati sorgente della baseline.
+[ ] G8/G9/G10/G12 Alpha conservano la semantica.
+[ ] HOME Alpha e pulsanti originali funzionano.
+[ ] FSC_Aggiorna originale funziona come prima.
+
+5. CICLO OPERATIVO BETA
+[ ] OP_M10_IMPORTA_FONTI = successo.
+[ ] Protocolli/Protocol Plus e Scadenze/promemoria riallineati.
+[ ] Decreti/Incidenti/Fascicoli conservano rettifiche, eventi, note e semantica.
+[ ] OP_M10_STATO = CORRENTE.
+[ ] PDF operativo valido e senza note per default.
+
+6. SAVE / REOPEN
+[ ] Salva, chiudi Excel completamente, riapri, Debug > Compila VBAProject = PASS.
+[ ] OP_M10_STATO = CORRENTE.
+[ ] Rettifiche/note/task/manuali persistono.
+[ ] Nessun oggetto Alpha danneggiato.
+
+7. STALENESS
+[ ] Vecchio AggiornaTutto => NON CORRENTE, export bloccato; RIALLINEA => CORRENTE.
+[ ] Vecchio FSC_Aggiorna => stessa prova.
+[ ] Cambio config/mapping => NON CORRENTE.
+
+8. INSTALLAZIONE RIPETUTA
+[ ] OP_M10_INSTALLA ripetuto senza duplicati.
+[ ] Nessun archivio OP_ cancellato.
+[ ] Foglio estraneo omonimo => collisione bloccata.
+
+9. FAILURE PATHS
+[ ] Fonte Alpha invalida prima della scrittura => nessun Save/discard non necessario.
+[ ] Refresh OP fallito dopo scrittura => discard + nessun Save.
+[ ] Save finale fallito => discard.
+[ ] Pending edit => blocco prima della pipeline.
+[ ] Fingerprint/config non valido => export bloccato.
+[ ] Discard attivo => status/export/rebuild bloccati.
+
+10. PERFORMANCE — MISURARE
+Righe protocolli/decreti/incidenti/FSC e tempi SourceToken/RIALLINEA/IMPORTA_FONTI/PDF; annotare memoria/reattività.
+
+11. DECISIONE
+[ ] PASS — candidato RC1.
+[ ] FAIL — remediation aggiuntiva richiesta.
+[ ] LIMITAZIONE ACCETTATA — descrivere.
+
+FINCHE' TUTTI I GATE NON HANNO ESITI REALI:
+STATO = "M11.1 CANDIDATO, RC1 NON CONGELATA".

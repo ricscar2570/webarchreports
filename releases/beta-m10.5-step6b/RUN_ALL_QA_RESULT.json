@@ -1,0 +1,24 @@
+{
+  "total": 17,
+  "passed": 17,
+  "failed": [],
+  "results": [
+    {"script":"VERIFY_RELEASE.py","returncode":0,"stdout":"TOTAL=92 PASS=92 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P0_01_M4_WRITER_GUARD.py","returncode":0,"stdout":"TOTAL=10 PASS=10 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P0_02_M4_RELOAD_RECOVERY.py","returncode":0,"stdout":"TOTAL=22 PASS=22 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P0_03_UPGRADE_BOOTSTRAP.py","returncode":0,"stdout":"TOTAL=52 PASS=52 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P1_01_LOCAL_VIEW_SNAPSHOT.py","returncode":0,"stdout":"TOTAL=48 PASS=48 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P1_03_M11_FAILSAFE.py","returncode":0,"stdout":"TOTAL=37 PASS=37 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P1_04_M10_BUTTON_BINDING.py","returncode":0,"stdout":"TOTAL=14 PASS=14 FAIL=0\n","stderr":""},
+    {"script":"VERIFY_P1_05_REENTRANCY_GUARDS.py","returncode":0,"stdout":"TOTAL=40 PASS=40 FAIL=0\n","stderr":""},
+    {"script":"STEP6B_VBA_STATIC_SANITY.py","returncode":0,"stdout":"TOTAL=559 PASS=559 FAIL=0\n","stderr":""},
+    {"script":"STEP5_M11_STATIC_SANITY.py","returncode":0,"stdout":"TOTAL=15 PASS=15 FAIL=0\n","stderr":""},
+    {"script":"STEP4_VBA_STATIC_SANITY.py","returncode":0,"stdout":"TOTAL=52 PASS=52 FAIL=0\n","stderr":""},
+    {"script":"M10_4_MODEL_TESTS.py","returncode":0,"stdout":"TOTAL=59 PASS=59 FAIL=0\n","stderr":""},
+    {"script":"FUNCTIONAL_FLOW_MODELS.py","returncode":0,"stdout":"TOTAL=31 PASS=31 FAIL=0\n","stderr":""},
+    {"script":"SYSTEM_INTEGRATION_MODELS.py","returncode":0,"stdout":"TOTAL=13 PASS=13 FAIL=0\n","stderr":""},
+    {"script":"SYSTEM_INTEGRATION_RANDOM.py","returncode":0,"stdout":"ITER=5000 CHECKS=20000 PASS=20000 FAIL=0\n","stderr":""},
+    {"script":"SYSTEM_INTEGRATION_MUTATIONS.py","returncode":0,"stdout":"TOTAL=14 PASS=14 FAIL=0\n","stderr":""},
+    {"script":"SHARED_STATE_AUDIT.py","returncode":0,"stdout":"TOTAL=15 PASS=15 FAIL=0\n","stderr":""}
+  ]
+}
