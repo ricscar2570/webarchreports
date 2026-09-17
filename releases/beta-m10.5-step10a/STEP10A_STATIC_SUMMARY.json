@@ -1,21 +1,27 @@
 {
-  "source": "STEP10A_FULL_STATIC_RESULT.json in Project Library",
-  "total": 643,
-  "passed": 643,
-  "failed": [],
-  "module_count": 91,
-  "changed_module_count": 7,
-  "changed_modules": {
-    "100_modOP_M11_4_NativeAcceptance.bas": "dd4f8c7a9fdfea9a9b660550221fc28cb534c7edc3e4becdcd48a7f391cdc907",
-    "81_modOP_M10_Core.bas": "9f9c335653b4adc639503748c07a3d8c3087b8691aed0fc4a76f4a3a28f4f81e",
-    "82_modOP_M10_Update.bas": "826242da2212b5d488ff4db097fe2dd5e9b355323e419eb573b26294145c31b0",
-    "83_modOP_M10_Report.bas": "f3923fef224ff47bbdd1ddcda2b405c74be65397fb5f5395b44a189732a2bbc7",
-    "84_modOP_M10_Main.bas": "cdb4965ae0886505b87c541f955696297cb4cdf0ea526ddcce8377774ae9914a",
-    "85_modOP_M4H2_Guard.bas": "27c827abf3107841eefe6ec4abd53014dab273efa1b3959c4321b42305b53b46",
-    "99_modOP_M10_NativeTests.bas": "3d3442f5f9f7feb5e4b6de76f6e3b86cbeec1fb87a2ebb6491e3c9d678390c88"
+  "checkpoint": "M10.5/M11.5 STEP10A",
+  "release_state": "BETA_OFFLINE_VERIFIED_RC_BLOCKED",
+  "suite": "19/19 PASS",
+  "step10a_gate": "24/24 PASS",
+  "static_audit": "643/643 PASS",
+  "modules": 91,
+  "changed_modules": 7,
+  "macro_surface_unchanged": true,
+  "cold_overlay": "91/91 byte-identical; 19/19 PASS",
+  "hostile_vba_scan": {
+    "date": "2026-09-17",
+    "status": "CLOSED_PASS",
+    "new_confirmed_p0": 0,
+    "new_confirmed_p1": 0,
+    "new_confirmed_p2": 0,
+    "confirmed_step10a_regressions": 0,
+    "known_alpha_latent_risk": "modBacklog IIf - LOW / LATENT_NOT_REPRODUCED"
   },
-  "adapted_suite": "PASS 19/19",
-  "step10a_gate": "PASS 24/24",
-  "cold_overlay": "PASS 91/91 modules byte-identical; 19/19 suites",
-  "native_excel_vbe": "PENDING"
+  "open": {
+    "SURFACE-P1-01": "PENDING_REAL_WORKBOOK_GATE",
+    "SYS-P2-CONCURRENCY-SCOPE": "OPEN_OPTIMIZATION",
+    "NATIVE-GATE": "PENDING",
+    "RC-PACKAGE": "PENDING"
+  },
+  "decision": "No STEP10B preventive remediation. Proceed to native Excel/VBE gate; create further remediation only for reproducible findings."
 }
