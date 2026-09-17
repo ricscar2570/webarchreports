@@ -2,7 +2,7 @@
 
 ## Stato
 
-**OFFLINE FUNCTIONAL AUDIT PASS / RC BLOCKED — gate Microsoft Excel/VBE e workbook reale ancora PENDING.**
+**OFFLINE FUNCTIONAL AUDIT + HOSTILE VBA SCAN PASS / RC BLOCKED — gate Microsoft Excel/VBE e workbook reale ancora PENDING.**
 
 Questo checkpoint è la continuazione cumulativa del record GitHub STEP 6B. Non riscrive né sostituisce la Alpha congelata `EASYONE MINIMAL 1.0.3 + HOME 1.1` e non promuove la Beta a RC.
 
@@ -70,6 +70,23 @@ Esito:
 - macro surface invariata;
 - cold overlay: **91/91 byte-identici** e **19/19 suite PASS**.
 
+### 17 settembre 2026 — hostile VBA scan
+
+La scansione ostile è stata ripresa dal punto in cui era stata interrotta e completata sullo stato cumulativo STEP10A, senza modificare il VBA.
+
+Controlli concentrati su: `And`/`Or` non short-circuit, `IIf`, dereferenziazioni `Nothing`, `On Error Resume Next`, preservazione di `Err`, cleanup, EASYONE acquire/release, stato Excel capture/restore, reentrancy, `Application.Run`, contesto workbook/sheet, `ListObject`, Save/SaveAs, discard/last-good, FSC e PDF.
+
+Esito finale:
+
+- nuovi P0 confermati: **0**;
+- nuovi P1 confermati: **0**;
+- nuovi P2 confermati: **0**;
+- regressioni STEP10A confermate: **0**.
+
+Resta il solo rischio Alpha già noto `IIf` in `modBacklog`, classificato **LOW / LATENT_NOT_REPRODUCED**: non giustifica una modifica della Alpha congelata.
+
+Decisione: **hostile offline VBA scan CLOSED for STEP10A**. Non creare STEP10B per churn preventivo; una remediation successiva è giustificata solo da un difetto riproducibile emerso nel gate nativo o nell'audit della `.xlsm` reale.
+
 ## Moduli modificati in STEP 10A
 
 - `100_modOP_M11_4_NativeAcceptance.bas` — SHA-256 `dd4f8c7a9fdfea9a9b660550221fc28cb534c7edc3e4becdcd48a7f391cdc907`
@@ -99,7 +116,8 @@ Il package ZIP è archiviato nella Project Library. Il repository pubblico regis
 - `UI-P1-01`, `UI-P1-02`;
 - `PDF-P2-01`, `PDF-P2-02`;
 - `DOC-P2-M10-RUNTIME-VERSION`;
-- `DOC-P2-M4-NAMING`.
+- `DOC-P2-M4-NAMING`;
+- `HOSTILE-VBA-SCAN-STEP10A`.
 
 ### Ancora aperti / bloccanti
 
@@ -119,7 +137,8 @@ Il package ZIP è archiviato nella Project Library. Il repository pubblico regis
 7. PDF `ExportAsFixedFormat` reale;
 8. due workbook aperti e dispatch `Shape.OnAction`;
 9. performance/memoria su dataset reale;
-10. audit read-only STEP8B sulla vera `.xlsm` prima di ridurre la macro surface.
+10. tentativo reale di reentrancy durante `AGGIORNA_TUTTO` attraverso i `DoEvents`;
+11. audit read-only STEP8B sulla vera `.xlsm` prima di ridurre la macro surface.
 
 ## File di evidenza pubblicati in questo record
 
@@ -132,6 +151,7 @@ Il package ZIP è archiviato nella Project Library. Il repository pubblico regis
 - `STEP10A_VERSIONING_NAMING_REPORT.md`
 - `VBA_DIFF_STEP10A.patch`
 - `STEP10A_STATIC_SUMMARY.json`
+- `STEP10A_HOSTILE_VBA_SCAN_20260917.md`
 - `PACKAGE_SHA256.txt`
 
 La PR `beta -> main` deve restare **Draft / DO NOT MERGE** fino alla chiusura del gate RC.
