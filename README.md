@@ -52,6 +52,8 @@ Il pacchetto STEP 6B verificato ha SHA-256:
 
 Microsoft VBE/Excel reale non è ancora stato eseguito per questa remediation. Prima del freeze RC restano obbligatori: compilazione VBAProject, reentrancy reale durante `AGGIORNA_TUTTO`, prova con due copie WebArch aperte per `Shape.OnAction`, Workbook events, Save/close/reopen, PDF runtime e performance su dataset reale.
 
+La promozione `beta -> main` è regolata dal gate esplicito in [`docs/RC_PROMOTION_GATE.md`](docs/RC_PROMOTION_GATE.md). Finché quel gate non è chiuso, la Beta non deve essere presentata come RC congelata né promossa sul branch stabile.
+
 ## Disponibilità dei file
 
 Il repository pubblico contiene il registro del congelamento Alpha e i record delle milestone Beta. Per STEP 6B pubblica il rapporto tecnico, il diff VBA esatto, gli hash dei tre moduli modificati, l'evidenza QA e il checksum del pacchetto. La consegna completa verificata resta archiviata nella Project Library del progetto WebArch.
@@ -71,6 +73,7 @@ I file `BUILD/`, `BUILD_WEBARCH.cmd` e `PATCH_NOTES_v1.1.1.md` appartengono al b
 
 ## Documenti correnti
 
+- [Gate promozione RC](docs/RC_PROMOTION_GATE.md)
 - [Release corrente M10.5/M11.5 STEP 6B](releases/beta-m10.5-step6b/README.md)
 - [QA STEP 6B](releases/beta-m10.5-step6b/QA_SUMMARY.md)
 - [Rapporto tecnico STEP 6B](releases/beta-m10.5-step6b/STEP6B_P1_05_REPORT.md)
