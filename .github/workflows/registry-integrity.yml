@@ -1,0 +1,113 @@
+name: WebArch registry integrity
+
+on:
+  push:
+    branches: ["beta"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  registry-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Validate current Beta registry
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import re
+          import sys
+
+          root = pathlib.Path('.')
+          version_path = root / 'VERSION.json'
+          version = json.loads(version_path.read_text(encoding='utf-8'))
+
+          errors = []
+
+          expected_phase = 'beta'
+          if version.get('phase') != expected_phase:
+              errors.append(f"VERSION.json phase must be {expected_phase!r}, got {version.get('phase')!r}")
+
+          release_rel = version.get('current_release_record')
+          if not release_rel:
+              errors.append('VERSION.json current_release_record is missing')
+              release_dir = None
+          else:
+              release_dir = root / release_rel
+              if not release_dir.is_dir():
+                  errors.append(f'current_release_record directory not found: {release_rel}')
+
+          gate_rel = version.get('promotion_gate_record')
+          if not gate_rel or not (root / gate_rel).is_file():
+              errors.append(f'promotion gate not found: {gate_rel!r}')
+
+          if version.get('release_candidate_frozen') is not False:
+              errors.append('Current Beta registry must remain release_candidate_frozen=false until native gates are closed')
+
+          if version.get('promotion_state') != 'BLOCKED_NATIVE_AND_AUDIT_RECONCILIATION':
+              errors.append('Unexpected promotion_state for the current non-frozen Beta')
+
+          package_hash = version.get('step6b_package_sha256')
+          if not package_hash or not re.fullmatch(r'[0-9a-f]{64}', package_hash):
+              errors.append('Invalid or missing step6b_package_sha256')
+
+          if release_dir:
+              required = [
+                  'README.md',
+                  'QA_SUMMARY.md',
+                  'RUN_ALL_QA_RESULT.json',
+                  'SHA256SUMS.txt',
+                  'PACKAGE_SHA256.txt',
+                  'STEP6B_P1_05_REPORT.md',
+                  'VBA_DIFF_STEP6B.patch',
+              ]
+              for name in required:
+                  if not (release_dir / name).is_file():
+                      errors.append(f'Missing release record file: {release_rel}/{name}')
+
+              pkg_file = release_dir / 'PACKAGE_SHA256.txt'
+              if pkg_file.is_file() and package_hash:
+                  first = pkg_file.read_text(encoding='utf-8').strip().split()
+                  if not first:
+                      errors.append('PACKAGE_SHA256.txt is empty')
+                  elif first[0] != package_hash:
+                      errors.append(
+                          f'Package hash mismatch: VERSION.json={package_hash}, PACKAGE_SHA256.txt={first[0]}'
+                      )
+
+              sums_file = release_dir / 'SHA256SUMS.txt'
+              changed = version.get('step6b_changed_vba') or {}
+              if sums_file.is_file():
+                  sums_text = sums_file.read_text(encoding='utf-8')
+                  for filename, digest in changed.items():
+                      if digest not in sums_text or filename not in sums_text:
+                          errors.append(f'Changed VBA hash not represented in SHA256SUMS.txt: {filename}')
+
+              qa_file = release_dir / 'RUN_ALL_QA_RESULT.json'
+              if qa_file.is_file():
+                  try:
+                      json.loads(qa_file.read_text(encoding='utf-8'))
+                  except Exception as exc:
+                      errors.append(f'RUN_ALL_QA_RESULT.json is not valid JSON: {exc}')
+
+          if errors:
+              print('WebArch registry integrity: FAIL')
+              for err in errors:
+                  print(f' - {err}')
+              sys.exit(1)
+
+          print('WebArch registry integrity: PASS')
+          print(f" milestone: {version.get('beta_milestone')}")
+          print(f" release record: {release_rel}")
+          print(f" package sha256: {package_hash}")
+          print(f" promotion state: {version.get('promotion_state')}")
+          PY
