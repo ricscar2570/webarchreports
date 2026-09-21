@@ -1,0 +1,22 @@
+{
+  "release": "STEP10A-R4.8",
+  "date": "2026-09-21",
+  "full_package": {
+    "filename": "WebArch_STEP10A_R4_8_ONACTION_FIX_COMPLETO.zip",
+    "bytes": 898339,
+    "sha256": "e62101ee45de12b8f7efdabeb53c69e5b4bccfeeff4f3315d7aaf9f2c3de1798"
+  },
+  "patch_package": {
+    "filename": "WebArch_STEP10A_R4_8_ONACTION_FIX_PATCH_ONLY.zip",
+    "bytes": 41219,
+    "sha256": "7d6bd39d610fab5e77af67e6d32c18064e45eab6b92425bb8171d30b16261fab"
+  },
+  "vba_component_count": 91,
+  "github_asset_uploaded": false,
+  "delivery": "packages delivered separately in the project conversation",
+  "native_validation": {
+    "vba_compile": "PASS",
+    "configuration_tested_path": "PASS",
+    "evidence": "user confirmation on Microsoft Excel Desktop"
+  }
+}

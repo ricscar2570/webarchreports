@@ -1,0 +1,21 @@
+{
+  "release": "STEP10A-R4.8",
+  "base": "STEP10A-R4.7",
+  "changed_files": [
+    {
+      "path": "INSTALL/Common-Step10A.ps1",
+      "before_sha256": "e50e2f81029cdbefc6acec251dae6e8cd1d3ac794b70ec064cad21a0d940cd28",
+      "after_sha256": "cf84c5d4d7f0c0d5953de0742ce523459922598aebb84848e49b6efa8b3532e2"
+    },
+    {
+      "path": "INSTALL/03_CONFIGURA_STRUTTURE_DOPO_COMPILAZIONE.ps1",
+      "before_sha256": "437295fba18f6f3d9e991bdeaa3613bc21378b15b3b2047b0a8bea06cf9975ce",
+      "after_sha256": "ca580f472d92e1d7c48202072e91efb1963b273c93ce20d49e4469bcd22fd662"
+    },
+    {
+      "path": "TESTS/TEST_INSTALLER_R3.ps1",
+      "before_sha256": "ac4d9be56fe1b8ec90608fb9406c8330ca9565361c42b9c01590fbd34bff65fe",
+      "after_sha256": "c0f0a144ebea62efac89fcab58161a82ffd299dd98c10ef8af4e805e65d0fb96"
+    }
+  ]
+}

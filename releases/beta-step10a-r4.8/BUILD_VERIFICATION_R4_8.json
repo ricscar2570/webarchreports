@@ -1,0 +1,32 @@
+{
+  "release": "STEP10A-R4.8",
+  "date": "2026-09-21",
+  "status": "NATIVE_TESTED_PATH_PASS",
+  "native_evidence": {
+    "vba_compile": "PASS (user test)",
+    "r4_7_config_manual_full": "PASS (user log)",
+    "r4_7_fsc_install": "PASS (user log)",
+    "r4_7_m2_to_m10": "PASS with postconditions (user log)",
+    "r4_7_m8_runtime": "PASS with postconditions (user log)",
+    "r4_8_onaction_runtime": "PASS by user confirmation: version does not produce the previous error"
+  },
+  "root_cause": "Excel returned Shape.OnAction as Workbook.xlsm!Macro without optional single quotes; R4.7 required the raw quoted prefix and compared raw text exactly.",
+  "fix": "semantic OnAction validation: normalize quoted/unquoted workbook token, unescape doubled apostrophes, require exact current workbook and explicit UI allowlist; reject unqualified/other-workbook/unknown macros.",
+  "vba_modules_changed_from_r4_7": [],
+  "installer_files_changed_from_r4_7": [
+    "INSTALL/Common-Step10A.ps1",
+    "INSTALL/03_CONFIGURA_STRUTTURE_DOPO_COMPILAZIONE.ps1",
+    "TESTS/TEST_INSTALLER_R3.ps1"
+  ],
+  "offline_tests": {
+    "r3_regressions": "20/20 PASS",
+    "r4_hardening": "8/8 PASS",
+    "r4_2_installer_guard": "4/4 PASS",
+    "r4_3_excel_open_fix": "7/7 PASS",
+    "r4_4_template_tables": "6/6 PASS",
+    "r4_6_project_namespace": "4/4 PASS",
+    "r4_7_m8_shape_fix": "3/3 PASS",
+    "r4_8_onaction_normalization": "6/6 PASS"
+  },
+  "scope_note": "PASS applies to the tested native build/configuration path and does not assert exhaustive defect-free operation."
+}

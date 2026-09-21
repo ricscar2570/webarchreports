@@ -1,12 +1,17 @@
 {
   "phase": "beta",
-  "beta_milestone": "B0",
+  "beta_milestone": "STEP10A-R4.8",
   "baseline": "alpha-1.0.3-home1.1",
-  "alpha_freeze_record_commit": "6200b27585be2c37b828145499a00ff379ef6b96",
-  "alpha_freeze_record_branch": "alpha-frozen-1.0.3-home1.1",
   "source_version": "EASYONE-MINIMAL-1.0.3",
   "home_version": "1.1",
-  "production_delta_from_accepted_baseline": 0,
-  "github_content_scope": "freeze registry and documentation; full source upload pending",
-  "date": "2026-09-14"
+  "step10a_release": "R4.8",
+  "vba_component_count": 91,
+  "native_vba_compile": "PASS (user-validated on Excel Desktop)",
+  "native_configuration": "PASS for the tested R4.8 path (user confirmed no error)",
+  "full_package": "WebArch_STEP10A_R4_8_ONACTION_FIX_COMPLETO.zip",
+  "full_package_sha256": "e62101ee45de12b8f7efdabeb53c69e5b4bccfeeff4f3315d7aaf9f2c3de1798",
+  "patch_package": "WebArch_STEP10A_R4_8_ONACTION_FIX_PATCH_ONLY.zip",
+  "patch_package_sha256": "7d6bd39d610fab5e77af67e6d32c18064e45eab6b92425bb8171d30b16261fab",
+  "github_content_scope": "release registry, hashes and validation documentation; full binary package delivered separately",
+  "date": "2026-09-21"
 }

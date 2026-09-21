@@ -2,39 +2,46 @@
 
 ## Stato del progetto
 
-**Alpha congelata: EASYONE MINIMAL 1.0.3 + HOME 1.1.**
+**Beta corrente: STEP10A R4.8 — OnAction normalization fix.**
 
-Il 14 settembre 2026 il responsabile del progetto ha confermato: «funziona tutto come previsto», richiedendo il congelamento dell'alpha e l'avvio della beta. La conferma riguarda il suo utilizzo in Excel; non viene trasformata in una certificazione automatica di tutti i casi di test.
+Il 21 settembre 2026 la R4.8 è stata eseguita in Microsoft Excel Desktop dopo il ciclo di correzioni STEP10A. La compilazione VBA nativa è passata e l'utente ha confermato che questa versione non presenta l'errore che bloccava la configurazione. Il risultato è una validazione runtime dell'attuale percorso di build/configurazione; non va interpretato come certificazione automatica di ogni possibile caso d'uso.
 
-La beta B0 parte dagli stessi componenti produttivi: nessuna riscrittura, nessuna rimozione del debug e nessun ritorno alla macchina transazionale. La versione interna VBA resta EASYONE-MINIMAL-1.0.3; HOME resta 1.1.
+La baseline storica resta **EASYONE MINIMAL 1.0.3 + HOME 1.1**, congelata il 14 settembre 2026. STEP10A estende quella baseline con i moduli e gli installer beta tracciati nelle release R3–R4.8.
 
-## Disponibilità dei file: distinzione importante
+## Evidenze R4.8
 
-Questo aggiornamento del repository pubblica il **registro del congelamento, gli hash dei 36 componenti, il piano beta e il verificatore dell'archivio**. Il pacchetto completo è stato preparato e consegnato separatamente nella conversazione di progetto:
+- 91 componenti VBA caricati.
+- Compilazione nativa `Debug > Compila VBAProject`: PASS.
+- Installazione/configurazione nativa M2–M10 con postcondizioni: PASS nel collaudo utente.
+- M8 `OP_INCIDENTI`: PASS dopo il fix R4.7.
+- Validazione `Shape.OnAction`: corretta in R4.8 normalizzando la sintassi quoted/unquoted del nome workbook senza allentare whitelist e controllo del workbook.
+- L'utente ha confermato che la R4.8 non dà errore nel percorso appena collaudato.
 
-`WebArch_ALPHA_1_0_3_HOME_1_1_CONGELATA.zip`
+Pacchetto completo consegnato separatamente nella conversazione di progetto:
 
-SHA-256: `e94986fbee71cfcb380fdb53503a91058c812efcc3cbabac03e8c800872ef6f0`
+`WebArch_STEP10A_R4_8_ONACTION_FIX_COMPLETO.zip`
 
-**L'archivio completo, il template e tutti i sorgenti NON sono ancora caricati in questo Git tree o come asset di una release GitHub. Scaricare il repository non equivale a scaricare WebArch completo.** La pubblicazione integrale è un'attività aperta della beta. Il file .xlsm operativo con i dati dell'utente non è stato caricato e non deve essere pubblicato su questo repository pubblico.
+SHA-256: `e62101ee45de12b8f7efdabeb53c69e5b4bccfeeff4f3315d7aaf9f2c3de1798`
 
-I file `BUILD/`, `BUILD_WEBARCH.cmd` e `PATCH_NOTES_v1.1.1.md` appartengono al builder storico pre-MINIMAL: sono conservati per tracciabilità, **non sono la procedura di installazione della beta**.
+Patch R4.7 → R4.8:
 
-## Baseline conservata
+`WebArch_STEP10A_R4_8_ONACTION_FIX_PATCH_ONLY.zip`
 
-- Aggiorna tutto: importazione, validazione, deduplicazione, scrittura dati, analitiche, dashboard e report; salvataggio finale.
-- Stati protocollo presenti ma non mappati: WARNING registrato, protocollo conservato e aggiornamento non bloccato per questo motivo.
-- Correzioni PDF/XLS, accodamento staging, confronto dei testi simili a date e anteprima PA3.
-- Debug del salvataggio mantenuto, compreso DisplayAlerts al salvataggio finale.
-- Esportazione ordinaria come bozza tecnica; nessuna autorizzazione Gold implicita.
-- HOME 1.1: collegamenti interni ai fogli, senza dipendenza dal nome del workbook.
+SHA-256: `7d6bd39d610fab5e77af67e6d32c18064e45eab6b92425bb8171d30b16261fab`
+
+## Disponibilità dei file
+
+Questo repository pubblica il **registro delle versioni, gli hash, i changelog e le evidenze di validazione**. Il pacchetto binario completo R4.8 e l'XLSM operativo non sono pubblicati come asset GitHub in questo aggiornamento. Il workbook operativo con dati reali non deve essere pubblicato.
+
+I file `BUILD/`, `BUILD_WEBARCH.cmd` e `PATCH_NOTES_v1.1.1.md` appartengono al builder storico pre-MINIMAL e sono conservati solo per tracciabilità: non sono la procedura STEP10A corrente.
 
 ## Documenti correnti
 
-- [Congelamento e perimetro](releases/alpha-1.0.3-home1.1/FREEZE.md)
-- [Identità dell'archivio](releases/alpha-1.0.3-home1.1/artifact.json)
-- [Hash dei componenti produttivi](releases/alpha-1.0.3-home1.1/COMPONENTS.sha256)
-- [Piano beta B0](docs/BETA_B0.md)
-- [Verifica dell'archivio ricevuto](tools/verify_frozen_archive.py)
+- [Release STEP10A R4.8](releases/beta-step10a-r4.8/RELEASE.md)
+- [Identità artefatti R4.8](releases/beta-step10a-r4.8/artifact.json)
+- [Verifica R4.8](releases/beta-step10a-r4.8/BUILD_VERIFICATION_R4_8.json)
+- [Changeset R4.8](releases/beta-step10a-r4.8/CHANGESET_R4_8.json)
+- [Stato beta STEP10A](docs/BETA_STEP10A_R4_8.md)
+- [Freeze alpha storico](releases/alpha-1.0.3-home1.1/FREEZE.md)
 
-Non reinstallare o reimportare moduli nella copia funzionante soltanto per cambiare fase del progetto. Conservare l'alpha separatamente e svolgere i test beta su copie prive di dati da pubblicare.
+Conservare l'alpha congelata separatamente. Per ulteriori modifiche beta, partire dalla R4.8 validata e applicare correzioni circoscritte con regressione esplicita.
